@@ -9,7 +9,35 @@
 
 /* this function will be called by mergesort() and also by parallel_mergesort(). */
 void merge(int leftstart, int leftend, int rightstart, int rightend){
+	int leftptr = leftstart;	//Pointer for the left sub array
+	int rightptr = rightstart;	//Pointer for the right sub array
+	int newptr 	= leftstart; 	//Pointer for the new array
 
+	while (leftptr <= leftend && rightptr <= rightend){	//While there's at least 1 value in each half 
+		if(A[leftptr]<=A[rightptr]){
+			B[newptr] = A[leftptr];
+			leftptr++;
+		} else {
+			B[newptr] = A[rightptr];
+		}
+		newptr++;
+	}
+
+	//once one half has run out of elements 
+	while (leftptr <= leftend){
+		B[newptr] = A[leftptr];
+		newptr++;
+		leftptr++; 
+	}
+
+	while (rightptr <= rightend){
+		B[newptr] = A[rightptr];
+		newptr++;
+		rightptr++; 
+	}
+
+	//Copy the temporary array back into A: memcpy(*to, *from, numBytes)
+	memcpy(A + leftstart, B + leftstart,sizeof(int)*(rightend - leftend +1));
 }
 
 /* this function will be called by parallel_mergesort() as its base case. */
