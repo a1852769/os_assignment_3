@@ -19,6 +19,7 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 			leftptr++;
 		} else {
 			B[newptr] = A[rightptr];
+			rightptr++;
 		}
 		newptr++;
 	}
@@ -37,7 +38,7 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 	}
 
 	//Copy the temporary array back into A: memcpy(*to, *from, numBytes)
-	memcpy(A + leftstart, B + leftstart,sizeof(int)*(rightend - leftend +1));
+	memcpy(A + leftstart, B + leftstart,sizeof(int)*(rightend - leftstart +1));
 }
 
 /* this function will be called by parallel_mergesort() as its base case. */
@@ -59,6 +60,7 @@ void my_mergesort(int left, int right){ //Just a regular serial mergesort algori
 
 /* this function will be called by the testing program. */
 void * parallel_mergesort(void *arg){
+	//my_mergesort(arg->left,arg->right);
 		return NULL;
 }
 
