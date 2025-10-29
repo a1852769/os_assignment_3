@@ -2,32 +2,46 @@ README.template
 
 ## Project Number/Title 
 
-* Authors: Your Name, and your group members’ names
-* Group name: Your Group Name
+* Authors: Arron Nguyen 
+* Group name: A Buffer Group 3
 
 ## Overview
-
 Concisely explain what the program does. If this exceeds a couple of
 sentences, you're going too far. Generally, you should be pulling this
 right from the project specification. We don't want you to just cut and
 paste, but paraphrase what is stated in the project specification.
 
-## Manifest
+Implementation of the parallel mergesort algorithm using the pthreads library. 
+Threads are generated recursively until the desired level is reached, splitting the problem into smaller sub problems that are solved 
+with a serial mergesort in parallel using multithreading computing, saving time. 
 
+## Manifest
 A listing of source files and other non-generated files, and a brief
 (one-line) explanation of the purpose of each file.
 
-## Building the project
+mergesort.h : function prototypes and struct/variable definitions
+mergesort.c : function Implementations
+test-mergesort.c : driving code to run and test the functions. 
+Makefile : contains the compiling code to build the program
 
+## Building the project
 This section should tell the user how to build your code.  If you are
 delivering a library, where does it need to be installed, or how do you use
 it? Is this an executable, if so, how can a user get up to speed as fast as
 possible?
 
-## Features and usage
+To compile the code, execute 'make' in the command line.
+note: sometimes make needs to be run twice as test-mergesort.c comes up with errors saying functions aren't defined
 
+## Features and usage
 Summarise the main features of your program. It is also appropriate to
 instruct the user how to use your program.
+
+the code can be run by executing: ./test-mergesort <array size> <cutoff level> <seed>
+    Array size defines the size of the array to be filled with random integers and sorted. 
+    cutoff level defines the maximum number of levels the array will be split. The number of threads used is 2^levels.
+    The seed determines the numbers that are pseudo-randomly generated such that inputs can be reproduced.
+    
 
 ## Testing
 
@@ -35,12 +49,18 @@ This section should detail how you tested your code. Simply stating "I ran
 it a few times and it seems to work" is not sufficient. Your testing needs
 to be detailed here.
 
-## Known Bugs
+First the serial mergesort was tested. As this is a well known and documented algorithm, implementation was simple.
+To test the serial mergesort, print statements were placed within each step of the merge and mergesort functions.
+To start, a small array of 8 was created. I sorted it by hand using mergesort to give an expected procedure and compared 
+the algorithm's output to my procedure, spotting differences. Once the 8-sized array had been confirmed to function correctly
+for different seeds, arrays of varying size, specifically that are not powers of 2 were tested. 
 
+## Known Bugs
 List known bugs that you weren't able to fix (or ran out of time to fix).
 
-## Reflection and Self Assessment
+When compiling using the make command, mergesort.c has undefined references to arrays A and B. Using the make command again works as intended
 
+## Reflection and Self Assessment
 Discuss the issues you encountered during development and testing. What
 problems did you have? What did you have to research and learn on your own?
 What kinds of errors did you get? How did you fix them?
@@ -49,11 +69,21 @@ What parts of the project did you find challenging? Is there anything that
 finally "clicked" for you in the process of working on this project? How well
 did the development and testing process go for you?
 
+After reading through the textbook and assignment description, the conceptual knowledge seemed easy to grasp for me, 
+but implementing it was much harder. After sitting down and looking through the starter code, analysing the functions and 
+how the variables could be accessed, the implementation side started to click. An example is the implementation of the serial 
+mergesort. In my ADSA course and in examples online, it is common to pass an array for the algorithm to sort, but the use of 
+the global arrays confused me a bit. After understanding that the only thing you need to pass into the functions were the 
+indexes, work started progressing quicker. 
+
+
+
 ## Sources Used
 GeeksforGeeks. (2013). C program for Merge Sort. [online] Available at: https://www.geeksforgeeks.org/c/c-program-for-merge-sort/ [Accessed 26 Oct. 2025].
 GeeksforGeeks (2016). memcpy() in C. [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/cpp/memcpy-in-cc/.
 GeeksforGeeks (2017). Merge Sort using Multithreading. [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/dsa/merge-sort-using-multi-threading/ [Accessed 26 Oct. 2025].
 GeeksforGeeks (2019). Thread Management Functions in C. [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/c/thread-functions-in-c-c/.
+ChatGPT to aid in debugging and syntax knowledge
 
 If you used any sources outside of the textbook, you should list them here. 
 If you looked something up on stackoverflow.com or you use help from AI, and 
