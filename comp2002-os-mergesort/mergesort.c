@@ -6,6 +6,7 @@
 #include <string.h> /* for memcpy */
 #include <stdlib.h> /* for malloc */
 #include "mergesort.h"
+//#include "test-mergesort.c"
 
 /* this function will be called by mergesort() and also by parallel_mergesort(). */
 void merge(int leftstart, int leftend, int rightstart, int rightend){
@@ -13,11 +14,19 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 	int rightptr = rightstart;	//Pointer for the right sub array
 	int newptr 	= leftstart; 	//Pointer for the new array
 
+	int leftsize = leftend - leftstart + 1;
+	int rightsize = rightend - rightstart + 1;
+	//printf("Elements in left half: %d\n", leftsize);
+	//printf("Elements in right half: %d\n", rightsize);
+
 	while (leftptr <= leftend && rightptr <= rightend){	//While there's at least 1 value in each half 
+		//printf("left element:%d, right element:%d\n", A[leftptr],A[rightptr]);
 		if(A[leftptr]<=A[rightptr]){
+			//printf("left is smaller, placing into B\n");
 			B[newptr] = A[leftptr];
 			leftptr++;
 		} else {
+			//printf("right is smaller, placing into B\n");
 			B[newptr] = A[rightptr];
 			rightptr++;
 		}
@@ -26,19 +35,23 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 
 	//once one half has run out of elements 
 	while (leftptr <= leftend){
+		//printf("placing rest of left elements\n");
 		B[newptr] = A[leftptr];
 		newptr++;
 		leftptr++; 
 	}
 
 	while (rightptr <= rightend){
+		//printf("placing rest of right elements\n");
 		B[newptr] = A[rightptr];
 		newptr++;
 		rightptr++; 
 	}
-
+	//printB();
 	//Copy the temporary array back into A: memcpy(*to, *from, numBytes)
+	//printf("Copying to A...\n");
 	memcpy(A + leftstart, B + leftstart,sizeof(int)*(rightend - leftstart +1));
+	//printA();
 }
 
 /* this function will be called by parallel_mergesort() as its base case. */
@@ -46,6 +59,7 @@ void my_mergesort(int left, int right){ //Just a regular serial mergesort algori
 	int middle;
 	//Base case: when there's 1 element
 	if (left >= right) {
+		//printf("base case reached\n");
 		return;
 	}
 
