@@ -151,17 +151,27 @@ int main(int argc, char **argv) {
 	double start_time;
 	double sorting_time;
 
+	//Printing A before 
+	/*
+	printf("A before: \n");
+	printA();
+	*/
+
 	// sort the input (and time it)
 	start_time = getMilliSeconds();
 	/* first index is 0, last index is n-1, we consider the main thread as level 0 */
 	struct argument *arg=buildArgs(0, n-1, 0);
-	//parallel_mergesort(arg);
-	my_mergesort(0,n-1);
+	parallel_mergesort(arg);
+	//my_mergesort(0,n-1);
 	sorting_time = getMilliSeconds() - start_time;
 
 	// print the array, for debugging purpose.
-	//printA();
-	//printB();
+	/*
+	printf("A After: \n");
+	printA();
+	printf("B After: \n");
+	printB();
+	*/
 	// print results if correctly sorted otherwise cry foul and exit
 	if (check_if_sorted(A,n)) {
 		printf("Sorting %d elements took %4.2lf seconds.\n", n,  sorting_time/1000.0);

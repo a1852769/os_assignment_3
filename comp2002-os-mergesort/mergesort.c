@@ -60,13 +60,34 @@ void my_mergesort(int left, int right){ //Just a regular serial mergesort algori
 
 /* this function will be called by the testing program. */
 void * parallel_mergesort(void *arg){
-	//my_mergesort(arg->left,arg->right);
+	//extract the arguments from the struct 
+	struct argument *args = (struct argument *) arg;
+	int left = args->left;
+	int right = args->right;
+	int level = args->level;
+
+	//Testing if arguments have been passed correctly.
+	printf("left: %d\n", left);
+	printf("right: %d\n", right);
+	printf("level: %d\n", level);
+	
+
 		return NULL;
 }
 
 /* we build the argument for the parallel_mergesort function. */
 struct argument * buildArgs(int left, int right, int level){
+	//Make a new argument struct 
+	struct argument *args = malloc(sizeof(struct argument));
+		if (args == NULL){
+			perror("argument could not build");
+			exit(1);
+		}
 
-		return NULL;
+	//Assign the arguments to the struct
+	args->left = left;
+	args->right = right; 
+	args->level = level;
+		return args;
 }
 
