@@ -116,6 +116,18 @@ void printA(void){
 	printf("\n");
 }
 
+/* this function prints 8 elements of A, used for small arrays */
+void printAsmall(void){
+	int i;
+	printf("Array A:");
+	/* FIXME: we assume the size of A is at least 100, and this will fail if it is lower than 100 */
+	for(i=0;i<7;i++){
+		printf(" %d",A[i]);
+	}
+	printf("\n");
+}
+
+
 /* this function prints B, but we only print the first 100 elements */
 void printB(void){
 	int i;
@@ -152,10 +164,10 @@ int main(int argc, char **argv) {
 	double sorting_time;
 
 	//Printing A before 
-	/*
-	printf("A before: \n");
-	printA();
-	*/
+	
+	//printf("A before: \n");
+	//printAsmall();
+	
 
 	// sort the input (and time it)
 	start_time = getMilliSeconds();
@@ -166,12 +178,12 @@ int main(int argc, char **argv) {
 	sorting_time = getMilliSeconds() - start_time;
 
 	// print the array, for debugging purpose.
-	/*
-	printf("A After: \n");
-	printA();
-	printf("B After: \n");
-	printB();
-	*/
+	
+	//printf("A After: \n");
+	//printAsmall();
+	//printf("B After: \n");
+	//printB();
+	
 	// print results if correctly sorted otherwise cry foul and exit
 	if (check_if_sorted(A,n)) {
 		printf("Sorting %d elements took %4.2lf seconds.\n", n,  sorting_time/1000.0);

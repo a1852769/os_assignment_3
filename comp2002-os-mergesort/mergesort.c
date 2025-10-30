@@ -80,16 +80,23 @@ void * parallel_mergesort(void *arg){
 	int right = args->right;
 	int level = args->level;
 	int middle = (right + left)/2;
+	pid_t tid = gettid();
+
+	//print the level and id of the current thread 
+	//printf("Current Level: %d\n", level);
+	//printf("Current thread: %d\n", tid);
 
 	//Base Case if cutoff level has been reached OR just out of elements 
 	if (level >= cutoff){
 		//Just regular mergesort
-		printf("Cutoff level reached");
+		//printf("Cutoff level reached\n");
 		my_mergesort(left, right);
-		free(args);
+		//free(args);
+		return NULL;
 	} else if (left >= right) {
 		//just return the elements as is 
-		free(args);
+		//printf("out of elements");
+		//free(args);
 		return NULL;
 	}
 
@@ -101,8 +108,8 @@ void * parallel_mergesort(void *arg){
 	pthread_t t2;
 
 	//Create the threads 
-	pthread_create(&t1, NULL, parallel_mergesort, &leftArgs);
-	pthread_create(&t2, NULL, parallel_mergesort, &rightArgs);
+	pthread_create(&t1, NULL, parallel_mergesort, leftArgs);
+	pthread_create(&t2, NULL, parallel_mergesort, rightArgs);
 
 	//Wait for both of the threads to finish before merging 
 	pthread_join(t1, NULL);
