@@ -14,8 +14,8 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 	int rightptr = rightstart;	//Pointer for the right sub array
 	int newptr 	= leftstart; 	//Pointer for the new array
 
-	int leftsize = leftend - leftstart + 1;
-	int rightsize = rightend - rightstart + 1;
+	//int leftsize = leftend - leftstart + 1;
+	//int rightsize = rightend - rightstart + 1;
 	//printf("Elements in left half: %d\n", leftsize);
 	//printf("Elements in right half: %d\n", rightsize);
 
@@ -79,12 +79,41 @@ void * parallel_mergesort(void *arg){
 	int left = args->left;
 	int right = args->right;
 	int level = args->level;
+	int middle = (right + left)/2;
+
+	//Base Case if cutoff level has been reached OR just out of elements 
+	if (level >= cutoff){
+		//Just regular mergesort
+		printf("Cutoff level reached");
+		my_mergesort(left, right);
+		free(args);
+	} else if (left >= right) {
+		//just return the elements as is 
+		free(args);
+		return NULL;
+	}
+
+	//Prepare the arguments for the threads 
+	struct argument *leftArgs = buildArgs(left, middle, level+1);
+	struct argument *rightArgs = buildArgs(middle+1, right, level+1);
+
+	pthread_t t1;
+	pthread_t t2;
+
+	//Create the threads 
+	pthread_create(&t1, NULL, parallel_mergesort, &leftArgs);
+	pthread_create(&t2, NULL, parallel_mergesort, &rightArgs);
+
+	//Wait for both of the threads to finish before merging 
+	pthread_join(t1, NULL);
+	pthread_join(t2, NULL);	//We dont care about the return value since we're dealing with global variables
+
+	merge(left, middle, middle+1, right);
 
 	//Testing if arguments have been passed correctly.
-	printf("left: %d\n", left);
-	printf("right: %d\n", right);
-	printf("level: %d\n", level);
-	
+	//printf("left: %d\n", left);
+	//printf("right: %d\n", right);
+	//printf("level: %d\n", level);
 
 		return NULL;
 }
