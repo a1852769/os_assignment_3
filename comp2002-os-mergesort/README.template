@@ -57,7 +57,13 @@ for different seeds, arrays of varying size, specifically that are not powers of
 tested to ensure they could be solved in a reasonable amount of time to ensure that the desired efficiency of O(nlogn) had been 
 reached.
 
-The buildArgs function was tested next by 
+The buildArgs function was tested next by passing the struct pointer into the then empty parallel_mergesort function. The only code in the function 
+was to print the arguments to ensure they were correct. 
+
+The parallel_mergesort function was tested by printing the thread id and it's current level to ensure threads were starting the serial merge sort 
+when reaching the level cutoff. 
+
+Edge cases such as having more threads than elements and having a cutoff of 0 (serial mergesort) were tested.
 
 ## Known Bugs
 List known bugs that you weren't able to fix (or ran out of time to fix).
@@ -84,7 +90,11 @@ so implementing it and debugging the regular serial mergesort was easy.
 As my coding skills are quite weak, dealing with pointers and memory allocation was an exercise in patience for me. 
 The buildArgs function requires the programmer to allocate heap memory so that children threads can still access the variables and they remain valid.
 Understanding when to allocate variables to the heap and when to free them required some thinking and careful planning.
-I did this planning 
+I did this planning on paper, seeing which arguments might be accessed by other threads and need to be stored in the heap, and when it was ok to free them. 
+
+When testing passing the arguments to the threads, there was an issue where when printing the thread's current level, it would give a nonsense answer like 50632
+and then the next level would print 50633. 
+
 
 
 
