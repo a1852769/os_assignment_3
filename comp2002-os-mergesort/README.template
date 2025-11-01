@@ -53,7 +53,11 @@ First the serial mergesort was tested. As this is a well known and documented al
 To test the serial mergesort, print statements were placed within each step of the merge and mergesort functions.
 To start, a small array of 8 was created. I sorted it by hand using mergesort to give an expected procedure and compared 
 the algorithm's output to my procedure, spotting differences. Once the 8-sized array had been confirmed to function correctly
-for different seeds, arrays of varying size, specifically that are not powers of 2 were tested. 
+for different seeds, arrays of varying size, specifically that are not powers of 2 were tested. Arrays of size up to 10,000,000 were
+tested to ensure they could be solved in a reasonable amount of time to ensure that the desired efficiency of O(nlogn) had been 
+reached.
+
+The buildArgs function was tested next by 
 
 ## Known Bugs
 List known bugs that you weren't able to fix (or ran out of time to fix).
@@ -74,7 +78,13 @@ but implementing it was much harder. After sitting down and looking through the 
 how the variables could be accessed, the implementation side started to click. An example is the implementation of the serial 
 mergesort. In my ADSA course and in examples online, it is common to pass an array for the algorithm to sort, but the use of 
 the global arrays confused me a bit. After understanding that the only thing you need to pass into the functions were the 
-indexes, work started progressing quicker. 
+indexes, work started progressing quicker. As mentioned previously, the mergesort algorithm is well known and documented,
+so implementing it and debugging the regular serial mergesort was easy. 
+
+As my coding skills are quite weak, dealing with pointers and memory allocation was an exercise in patience for me. 
+The buildArgs function requires the programmer to allocate heap memory so that children threads can still access the variables and they remain valid.
+Understanding when to allocate variables to the heap and when to free them required some thinking and careful planning.
+I did this planning 
 
 
 
