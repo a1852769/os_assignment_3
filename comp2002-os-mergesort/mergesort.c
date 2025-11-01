@@ -80,7 +80,7 @@ void * parallel_mergesort(void *arg){
 	int right = args->right;
 	int level = args->level;
 	int middle = (right + left)/2;
-	pid_t tid = gettid();
+	//pid_t tid = gettid();
 
 	//print the level and id of the current thread 
 	//printf("Current Level: %d\n", level);
@@ -121,7 +121,10 @@ void * parallel_mergesort(void *arg){
 	//printf("left: %d\n", left);
 	//printf("right: %d\n", right);
 	//printf("level: %d\n", level);
-
+	//free the args if its not the root call
+	if (level > 0){
+		free(args);
+	}
 		return NULL;
 }
 
